@@ -15,3 +15,22 @@
 .aligntotheright{
     text-align: right;
 }
+
+.flexParent{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    
+}
+
+.sidebar{
+    flex:0;
+    
+
+}
+
+.maincontent{
+    flex:1;
+    overflow: scroll;
+}
+
