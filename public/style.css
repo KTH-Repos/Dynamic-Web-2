@@ -2,3 +2,16 @@
 .debug {
     border-style:solid;
 }
+
+
+.numtablerow{
+    text-align: right;
+}
+
+.dishpricerow{
+    text-align: right;
+}
+
+.aligntotheright{
+    text-align: right;
+}

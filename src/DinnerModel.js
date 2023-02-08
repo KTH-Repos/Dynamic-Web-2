@@ -10,11 +10,13 @@ class DinnerModel{
     setNumberOfGuests(nr){
         // if() and throw exercise
         
-        // TODO throw an Error /* new Error(someMessage) */ if the argument is smaller than 1 or not an integer
+        if (parseInt(nr) < 1 || Number.isInteger(nr) === false){
+            throw new Error ('number of guests not a positive integer');
+        }
         // The error message must be exactly "number of guests not a positive integer"
         // To learn how to check for integer, test at the Developer Tools Console: Number.isInteger(3.14)
         
-        // TODO if the argument is a valid number of guests, store it in this.numberOfGuests
+        this.numberOfGuests = nr
         
         // When this is done, the Unit test "TW1.1 DinnerModel/can set the number of guests" should pass
         // also "number of guests is a positive integer"
@@ -28,11 +30,13 @@ class DinnerModel{
     removeFromMenu(dishToRemove){
         // callback exercise! Also return keyword exercise
         function hasSameIdCB(dish){
-            // TODO return true if the id property of dish is _different_ from the dishToRemove's id property
+            if (dish.id !== dishToRemove.id){
+                return true;
+            }
             // This will keep the dish when we filter below.
             // That is, we will not keep the dish that has the same id as dishToRemove (if any)
         }
-        this.dishes= this.dishes.filter(/*TODO pass the callback!*/);
+        this.dishes= this.dishes.filter(hasSameIdCB);
         // the test "can remove dishes" should pass
     }
     /* 
@@ -42,7 +46,7 @@ class DinnerModel{
        So we store also abstract data that will influence the application status.
      */
     setCurrentDish(id){
-        //this.currentDish=TODO
+        this.currentDish= id
         // note that we are adding a new object property (currentDish) which was not initialized in the constructor
     }
 
