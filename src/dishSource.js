@@ -1,23 +1,27 @@
-import { BASE_URL } from "./apiConfig";
+import { API_KEY, BASE_URL } from "./apiConfig";
 
 
 function onResponseSuccessACB(response){
-    console.log(response.data);
+    console.log(response.json());
 }
 
 function onResponseFailureACB(error){
     console.log(error);
 }
 
+const options = {
+	method: 'GET',
+	headers: {
+		'X-Mashape-Key': API_KEY,
+		'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+	}
+};
+
 function getMenuDetails(array){
-    fetch(BASE_URL,{
-        method: 'GET',
-        url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/menuItems/%7Bid%7D',
-        headers: {
-          'X-RapidAPI-Key': '8b519956f6msh0ffe7c882f3f7e6p1d7bf9jsn833e4633b7ff',
-          'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-        }
-      }).then(onResponseSuccessACB).catch(onResponseFailureACB);   
+  
+  console.log(array)
+  fetch(BASE_URL , options).then(onResponseSuccessACB)
+  .catch(onResponseFailureACB);   
 }
 
 export {getMenuDetails};
