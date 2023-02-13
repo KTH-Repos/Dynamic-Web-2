@@ -10,8 +10,6 @@ function processHTTPResponseACB(response){
 }
 
 function processHTTPContentACB(response){
-  console.log("This is response");
-  console.log(response);
   return response;
 } 
 

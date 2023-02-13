@@ -34,3 +34,10 @@
     overflow: scroll;
 }
 
+.someCLass{
+    text-align: center;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    vertical-align: middle;
+}
