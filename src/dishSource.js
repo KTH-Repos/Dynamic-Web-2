@@ -3,16 +3,10 @@
 import { API_KEY, BASE_URL } from "./apiConfig";
 
 function processHTTPResponseACB(response){
-    if(response.status!==200 || !(response.ok)) {
-      throw new Error(`Error: ${response.status}`);
-      //return undefined;
-    }
     return response.json();
 }
 
 function processHTTPContentACB(response){
-  //console.log(response);
-  //console.log("this is the second then");
   return response;
 }
 
@@ -30,26 +24,27 @@ const options = {
 };
 
 function getMenuDetails(array) {
-  const param = array.join();
+  const param = array.join(",");
   return fetch(BASE_URL+API_ENDPOINT_1+'?ids='+param, options)
   .then(processHTTPResponseACB)
-  .then(processHTTPContentACB)
-  .catch(onResponseFailureACB);
+  .then(processHTTPContentACB);
 }
 
-async function getDishDetails(id) {
-  const obj = await getMenuDetails([id]);
-  //console.log(obj);
-  //console.log("this shouldnt return anything");
-  console.log(obj[0]);
-  return obj[0];
+function handleObjectReturnedACB(response) {
+  return response[0];
+}
+
+function getDishDetails(id) {
+  return getMenuDetails([id]).then(handleObjectReturnedACB);
 }
 
 function searchDishes(object) {
   console.log(object.type);
   const param = new URLSearchParams(`query=${encodeURIComponent(object.query)}&type=${encodeURIComponent(object.type)}`);
   return fetch(BASE_URL+API_ENDPOINT_2+param, options)
-  .then(onResponseSuccessACB);
+  .then(processHTTPResponseACB)
+  .then(processHTTPContentACB)
+  .catch(onResponseFailureACB);
 } 
 
 export {getMenuDetails,getDishDetails,searchDishes};
