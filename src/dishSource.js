@@ -3,6 +3,9 @@
 import { API_KEY, BASE_URL } from "./apiConfig";
 
 function processHTTPResponseACB(response){
+    if(response.status!==200) {
+      throw new Error(`Error: ${response.status}`);
+    }
     return response.json();
 }
 
