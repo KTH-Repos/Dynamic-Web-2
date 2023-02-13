@@ -10,8 +10,10 @@ function processHTTPResponseACB(response){
 }
 
 function processHTTPContentACB(response){
+  console.log("This is response");
+  console.log(response);
   return response;
-}
+} 
 
 function onResponseFailureACB(err){
   return err;
@@ -41,13 +43,24 @@ function getDishDetails(id) {
   return getMenuDetails([id]).then(handleObjectReturnedACB);
 }
 
+function handleObjectReturnedForDishesACB(response) {
+  return response.results;
+}
+
 function searchDishes(object) {
-  console.log(object.type);
-  const param = new URLSearchParams(`query=${encodeURIComponent(object.query)}&type=${encodeURIComponent(object.type)}`);
-  return fetch(BASE_URL+API_ENDPOINT_2+param, options)
+  const paramString = 'query='+object.query+'&'+'type='+object.type;
+  const param = new URLSearchParams(paramString);
+  if(object.query === undefined) {
+    param.delete('query');
+
+  }
+  if(object.type === undefined) {
+    param.delete('type');
+  }
+  return fetch(BASE_URL+API_ENDPOINT_2+'?'+param, options)
   .then(processHTTPResponseACB)
   .then(processHTTPContentACB)
-  .catch(onResponseFailureACB);
+  .then(handleObjectReturnedForDishesACB);
 } 
 
 export {getMenuDetails,getDishDetails,searchDishes};
