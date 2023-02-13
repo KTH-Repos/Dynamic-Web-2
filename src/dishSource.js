@@ -3,18 +3,21 @@
 import { API_KEY, BASE_URL } from "./apiConfig";
 
 function processHTTPResponseACB(response){
-    if(response.status!==200)
-      throw (`Error: ${response.status}`)
+    if(response.status!==200 || !(response.ok)) {
+      throw new Error(`Error: ${response.status}`);
+      //return undefined;
+    }
     return response.json();
 }
 
 function processHTTPContentACB(response){
-  console.log(response);
+  //console.log(response);
+  //console.log("this is the second then");
   return response;
 }
 
 function onResponseFailureACB(err){
-  console.error(err);
+  return err;
 }
 
 const API_ENDPOINT_1 = 'recipes/informationBulk';
@@ -34,11 +37,12 @@ function getMenuDetails(array) {
   .catch(onResponseFailureACB);
 }
 
-function getDishDetails(id) {
- 
-  
-  return getMenuDetails([id]);
-  
+async function getDishDetails(id) {
+  const obj = await getMenuDetails([id]);
+  //console.log(obj);
+  //console.log("this shouldnt return anything");
+  console.log(obj[0]);
+  return obj[0];
 }
 
 function searchDishes(object) {
