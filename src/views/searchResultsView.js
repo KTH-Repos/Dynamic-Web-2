@@ -1,4 +1,4 @@
-function searchResultView(props){
+function SearchResultView(props){
 
     //TODO: Fix css!!
     
@@ -29,4 +29,4 @@ function searchResultView(props){
     )  
 }
 
-export default searchResultView;
+export default SearchResultView;
