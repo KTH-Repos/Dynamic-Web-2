@@ -3,15 +3,20 @@ function DetailsView(props){
     //TODO: Handle CSS
 
     const dishIngredients = props.dishData.extendedIngredients;
+    const dishIsInMenu = props.isDishInMenu;
     
-    console.log(props)
+    console.log(props);
+
+    
 
     function extractIngredientNameCB(dish) {
         return <span>{dish.name}: {(dish.amount)} {dish.unit}<br/></span>
     }
 
     function addDishToMenuACB(dish) {
-        return props.addToMenuACB(dish)  
+      // if(dishIsInMenu) {
+            props.onAddingDishToMenu(dish);  
+      // }
     }
 
     function removeDishFromMenuACB(e) {
