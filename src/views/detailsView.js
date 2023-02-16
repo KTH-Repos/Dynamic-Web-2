@@ -39,7 +39,7 @@ function DetailsView(props){
                 <a href={props.dishData.sourceUrl}> more information</a>
             </div>
             <div>
-                <button disabled = {props.isDishInMenu === true} onClick={addDishToMenuACB}>Add to menu!</button>
+                <button disabled = {props.isDishInMenu} onClick={addDishToMenuACB}>Add to menu!</button>
                 <button  onClick={removeDishFromMenuACB}>Cancel</button>
 
             </div>
