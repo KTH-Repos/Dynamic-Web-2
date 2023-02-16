@@ -10,7 +10,7 @@ function Details(props){
     console.log(props);
     
     
-    return <DetailsView guests = {props.model.numberOfGuests} dishData = {props.model.currentDishPromiseState.data} />
+    return promiseNoData(props.model.currentDishPromiseState) ||  <DetailsView guests = {props.model.numberOfGuests} dishData = {props.model.currentDishPromiseState.data} />
     
 
    
