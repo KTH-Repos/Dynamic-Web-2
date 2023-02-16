@@ -10,8 +10,8 @@ function DetailsView(props){
         return <span>{dish.name}: {(dish.amount)} {dish.unit}<br/></span>
     }
 
-    function addDishToMenuACB() {
-        return props.addToMenuACB()  
+    function addDishToMenuACB(dish) {
+        return props.addToMenuACB(dish)  
     }
 
     function removeDishFromMenuACB(e) {
