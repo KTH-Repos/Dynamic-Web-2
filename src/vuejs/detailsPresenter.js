@@ -6,41 +6,36 @@ import { getDishDetails } from '../dishSource.js';
 
 function Details(props){
 
-    console.log(props);
+    
 
-    const availableDishes = props.model.dishes;
+    const dishes = props.model.dishes;
     const currentDish = props.model.currentDish;
+    const data = props.model.currentDishPromiseState.data
+    const numberOfGuests = props.model.numberOfGuests;
+    
     
 
     
 
     function addDishToMenuInModelACB(){
         
-        props.model.addToMenu(currentDish);
+        props.model.addToMenu(data);
         
     }
 
-    function isDishAlreadyInMenuACB() {
+    function isDishAlreadyInMenuACB(dish) {
 
-       if (currentDish === availableDishes ) {
-        return true;
-       }
-        else {
-            addDishToMenuInModelACB();
-            
-        }
+        return currentDish === dish.id;
+        
 
        
        
     }
 
     
-
     
-    
-    
-    
-    return promiseNoData(props.model.currentDishPromiseState) ||  <DetailsView onAddingDishToMenu = {addDishToMenuInModelACB}  guests = {props.model.numberOfGuests} dishData = {props.model.currentDishPromiseState.data} isDishInMenu={isDishAlreadyInMenuACB}/>
+    return promiseNoData(props.model.currentDishPromiseState) ||  <DetailsView onAddingDishToMenu = {addDishToMenuInModelACB}  guests = {numberOfGuests}
+     dishData = {data} isDishInMenu={dishes.filter(isDishAlreadyInMenuACB).length > 0}/>
     
     
    
