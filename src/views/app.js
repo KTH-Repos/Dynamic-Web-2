@@ -19,8 +19,8 @@ function App(props){
     return (<div className="flexParent">
                 <div className="sidebar"><Sidebar model ={props.model}/></div>
                 <div className="mainContent"><Summary model={props.model} /></div>
-                <div className="mainContent" ><Search model={props.model} /></div>
-                <div className="mainContent" ><Details model={props.model} /></div>
+                <div className="mainContent"  ><Search model={props.model} /></div>
+                <div className="details" ><Details model={props.model} /></div>
             </div>
            );
 }

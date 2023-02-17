@@ -15,15 +15,16 @@ function SearchResultView(props){
     function clickSpanACB() {
         return props.resultChosenACB(searchResults);
     }
-    return <span onClick={clickSpanACB} key={searchResults.id} className = 'someClass'> 
+    return <span className="span_alignment"  onClick={clickSpanACB} key={searchResults.id} > 
                 <img onClick={onSpanClicked}src={searchResults.image} height ="100"></img>
                 <div onClick={onSpanClicked}>{searchResults.title}</div>
-            </span>
-    }   
+            </span>     
+    } 
+     
 
 
     return (
-        <div>
+        <div className="parent_div" >
             {searchResults.map(createSpansCB)}
         </div>
     )  

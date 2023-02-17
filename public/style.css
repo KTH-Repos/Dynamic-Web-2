@@ -30,20 +30,41 @@
 }
 
 .maincontent{
-    flex:1;
-    overflow: scroll;
+    flex:0,5;
+    
 }
 
-.someCLass{
-    text-align: center;
-    display: flex;
-    box-sizing: border-box;
-    width: 100%;
-    vertical-align: middle;
-}
+
 
 .flex_alignment{
     display: flex;
     
 
+}
+
+.details{
+    flex:0;
+}
+
+.span_alignment{
+    text-align: center;
+    max-width: 150px;
+    vertical-align: auto;
+    display: block;
+}
+
+
+.parent_div{
+    display: flex;
+    gap: 30px;
+    flex-flow: wrap;
+    
+}
+
+@media only screen and (max-width: 250px){
+    .flexParent{
+        
+        flex-direction: column;
+        
+    }
 }
