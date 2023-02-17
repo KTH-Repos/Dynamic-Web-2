@@ -1,6 +1,6 @@
 function SearchResultView(props){
 
-    //TODO: Fix css!!
+    
     
     const searchResults = props.searchResults;
     console.log(props)
