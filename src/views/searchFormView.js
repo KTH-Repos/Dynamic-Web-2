@@ -4,11 +4,11 @@ function SearchFormView(props){
     //console.log(props);
     
     function onChangeInputCB(e){
-        return props.searchTextACB(e.target.value);
+        return props.onInputChange(e.target.value);
     }
     
     function startSearchCB(e){
-        return props.searchNowACB();
+        return props.onSearchingNow();
     }
     
     function onChangeOptionCB(e) {
