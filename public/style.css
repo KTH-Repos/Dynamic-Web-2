@@ -29,9 +29,20 @@
 
 }
 
-.maincontent{
+.summary{
     flex:0,5;
     
+}
+
+.search{
+    flex:0,5;
+    
+}
+
+
+
+.details{
+    flex:0;
 }
 
 
@@ -42,9 +53,6 @@
 
 }
 
-.details{
-    flex:0;
-}
 
 .span_alignment{
     text-align: center;
