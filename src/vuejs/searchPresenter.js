@@ -1,21 +1,16 @@
 import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
 import promiseNoData from "../views/promiseNoData";
-import DinnerModel from "../DinnerModel";
 
 
 function Search(props) {
 
-    const promise = props.model.searchResultsPromiseState.promise;
-    const searchPromiseState = props.model.searchPromiseState;
-    const searchResultsPromiseState = props.model.searchResultsPromiseState;
-    const data = props.model.searchResultsPromiseState.data;
-    console.log(props.model.searchResultsPromiseState);
+    
     
 
     console.log(props);
-    if(!promise){
-        props.model.doSearch()
+    if(!props.model.searchResultsPromiseState.promise){
+        props.model.doSearch({})
     }
 
     function handleSearchACB(){
@@ -39,9 +34,15 @@ function Search(props) {
     
     
     return <div>
-   <SearchFormView onInputChange = {handleInputChangeACB} searchTypeCB={handleTypeChangeACB} onSearchingNow={handleSearchACB} dishTypeOptions = {["starter", "main course", "dessert"]} />
-   { promiseNoData( searchResultsPromiseState) || 
- 			<SearchResultsView resultChosenACB = {handleResultsACB} searchResults={data}/>}
+   <SearchFormView onInputChange = {handleInputChangeACB} 
+    searchTypeCB={handleTypeChangeACB} 
+    onSearchingNow={handleSearchACB} 
+    dishTypeOptions = {["starter", "main course", "dessert"]}
+     />
+    { promiseNoData( props.model.searchResultsPromiseState) || 
+ 	<SearchResultsView resultChosenACB = {handleResultsACB} 
+    searchResults={props.model.searchResultsPromiseState.data}
+    />}
           </div>;
 
     
