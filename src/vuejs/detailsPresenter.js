@@ -1,4 +1,3 @@
-
 import DetailsView from '../views/detailsView.js';
 import promiseNoData from '../views/promiseNoData.js';
 import { getDishDetails } from '../dishSource.js';
