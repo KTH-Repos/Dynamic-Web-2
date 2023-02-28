@@ -62,13 +62,13 @@ class DinnerModel{
        So we store also abstract data that will influence the application status.
      */
     setCurrentDish(id){
-       /*  const dishDetails = getDishDetails(id);
+        const dishDetails = getDishDetails(id);
         if(id !== undefined){
             if(id !== this.currentDish){
 
                 resolvePromise(dishDetails, this.currentDishPromiseState);
             }
-        } */
+        }
         if(this.currentDish !== id) {
             this.currentDish = id;
             // note that we are adding a new object property (currentDish) which was not initialized in the constructor

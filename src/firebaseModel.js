@@ -1,5 +1,3 @@
-const { initializeApp }= require( "firebase/app");
-const { getDatabase, ref, get, set, onValue}= require( "/src/teacherFirebase.js");
 // Add relevant imports here 
 // TODO
 
@@ -28,4 +26,4 @@ function updateModelFromFirebase(model) {
 }
 
 // Remember to uncomment the following line:
-export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase};
+// export {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase};
