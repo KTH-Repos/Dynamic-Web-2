@@ -56,10 +56,8 @@ async function testVue(theTest){
         app.use(VueRootAll.router);
         app.mount(div);
     });
-    const result= await theTest(propsHistory);
+    await theTest(propsHistory);
     app.unmount();
-    if(result===false)
-        return false;
     return true;
 }
 
@@ -89,10 +87,8 @@ async function testReact(theTest){
         require("react-dom").render(<Guard/>, div);
     });
 
-    const result= await theTest(propsHistory);
+    await theTest(propsHistory);
     turnOff();
-    if(result===false)
-        return false;
     return true;
 }
 
@@ -123,12 +119,9 @@ async function testRoutes(propsHistory){
 
 async function testSuspense(propsHistory){
     const {state, findPersistencePropNames}=require("./mockFirebase.js");
-    const x= findPersistencePropNames();
-    if(!x)
-        return false;
-    const {numberOfGuests, dishes, currentDish}= x;
+    const {numberOfGuests, dishes, currentDish}= findPersistencePropNames();
     
-    expect(propsHistory.length, "Root should render the initial promise: first no data, then an image, then the app").to.be.gte(3);
+    expect(propsHistory.length, "Root should render other components").to.be.gte(3);
     expect(propsHistory[0].type, "the root component will briefly render 'no data' before the lifecycle executes").to.equal("no data");
     expect(propsHistory[1].type, "the root component will render a loading image (suspense) while the persistence promise is resolved").to.equal("imgLoader");
     expect(propsHistory[2].model?.numberOfGuests, "the model passed to the presenters contains the data from the cloud (nr guests)").to.equal(state.data[numberOfGuests]);
