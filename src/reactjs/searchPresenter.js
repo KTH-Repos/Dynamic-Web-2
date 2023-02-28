@@ -1,17 +1,39 @@
 import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
 import promiseNoData from "../views/promiseNoData";
+import React from "react";
+import { useState, useEffect} from "react";
+import resolvePromise from "../resolvePromise";
 
-
+//searchResultsPromiseState and searchParams are needed from props
+export default
 function Search(props) {
 
-    
+    const [,reRender] = useState();
+    const [promiseState,] = useState(props.model.searchResultsPromiseState);
+
+
+
+    function forceRerenderACB(){
+        reRender(new Object()); 
+    }
+
+    function LifeAndDeath(props){    
+        function lifeACB(){
+           console.log("E.g. do first search, put results in component state!");
+           if(!promiseState.promise){
+            resolvePromise(searchDishes({}), promiseState, forceRerenderACB);
+        }
+           return function ripACB(){  
+               console.log("perform cleanup");
+           }; 
+        }
+        useEffect(lifeACB, []);
+
     
 
     console.log(props);
-    if(!props.model.searchResultsPromiseState.promise){
-        props.model.doSearch({})
-    }
+    
 
     function handleSearchACB(){
         props.model.doSearch(props.model.searchParams)
@@ -46,6 +68,6 @@ function Search(props) {
           </div>;
 
     
+    }
 }
 
-export default Search;
