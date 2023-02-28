@@ -14,6 +14,8 @@ const Search = require("../"+PREFIX+"/searchPresenter.js").default;
 
 const Details = require("../"+PREFIX+"/detailsPresenter.js").default;
 
+//const reactRoot = require("../"+PREFIX+"../reactjs/ReactRoot").default
+
 export default
 function App(props){
     return (<div className="flexParent">

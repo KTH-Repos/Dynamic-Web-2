@@ -4,47 +4,46 @@ import promiseNoData from "../views/promiseNoData";
 import React from "react";
 import { useState, useEffect} from "react";
 import resolvePromise from "../resolvePromise";
+import { searchDishes } from "../dishSource";
 
 //searchResultsPromiseState and searchParams are needed from props
 export default
 function Search(props) {
 
     const [,reRender] = useState();
-    const [promiseState,] = useState(props.model.searchResultsPromiseState);
-
-
-
-    function forceRerenderACB(){
+    const [promiseState,] = useState({});
+    const [searchType, setSearchType] = useState(props.model.searchParams.type);
+    const [searchQuery, setSearchQuery] = useState(props.model.searchParams.query);
+    
+    console.log(props)
+    function forceRerenderACB(){ 
         reRender(new Object()); 
     }
 
-    function LifeAndDeath(props){    
-        function lifeACB(){
-           console.log("E.g. do first search, put results in component state!");
-           if(!promiseState.promise){
-            resolvePromise(searchDishes({}), promiseState, forceRerenderACB);
-        }
-           return function ripACB(){  
-               console.log("perform cleanup");
-           }; 
-        }
-        useEffect(lifeACB, []);
 
+    // Component lifecycle hooks
+    function lifeACB() {
+        // Perform first search if results are not available
+        if (!props.model.searchResultsPromiseState.promise) {
+          props.model.doSearch(props.model.searchParams);
+        }
+      }
+  
+      function ripACB() {
+        console.log("perform cleanup");
+      }
     
 
-    console.log(props);
-    
-
-    function handleSearchACB(){
-        props.model.doSearch(props.model.searchParams)
+    function handleSearchACB(){ 
+        resolvePromise(searchDishes({type : searchType, query: searchQuery}), promiseState, forceRerenderACB);
     }
 
     function handleTypeChangeACB(type){
-        props.model.setSearchType(type);
+        setSearchType(type);
     }
 
     function handleInputChangeACB(query){
-        props.model.setSearchQuery(query);
+        setSearchQuery(query)
     }
 
     function handleResultsACB(dish){
@@ -61,13 +60,13 @@ function Search(props) {
     onSearchingNow={handleSearchACB} 
     dishTypeOptions = {["starter", "main course", "dessert"]}
      />
-    { promiseNoData( props.model.searchResultsPromiseState) || 
+    { promiseNoData(promiseState) || 
  	<SearchResultsView resultChosenACB = {handleResultsACB} 
-    searchResults={props.model.searchResultsPromiseState.data}
+    searchResults={promiseState.data}
     />}
           </div>;
 
     
     }
-}
+
 

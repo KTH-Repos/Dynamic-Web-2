@@ -1,19 +1,17 @@
-// Add relevant imports here 
-import React from "react";
 import { createHashRouter, RouterProvider }from "react-router-dom";
 import Details from "./detailsPresenter";
 import Search from "./searchPresenter";
 import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
-// Define the ReactRoot component
-export default
+import DinnerModel from "../DinnerModel";
+
 function ReactRoot() {
 
     const myModel = new DinnerModel();
     const router = [
         {
             path: "/",
-            element: < Search model={myModel} /> 
+            element: <Search model={myModel} /> 
         },
         {
             path: "/search",
@@ -31,10 +29,10 @@ function ReactRoot() {
 
     return(
         <div>
-            <div><Sidebar model={myModel} /></div>
-            <div><RouterProvider router={createHashRouter(router)} /></div>
+            <div className="sidebar"><Sidebar model={myModel} /></div>
+            <div className="flexParent"><RouterProvider router={createHashRouter(router)} /></div>
         </div>
-    );
+    );       
 }
 
-// Export the ReactRoot component
+export default ReactRoot;
