@@ -3,23 +3,32 @@ import { useState, useEffect } from "react";
 import DetailsView from '../views/detailsView.js';
 import promiseNoData from '../views/promiseNoData.js';
 import { getDishDetails } from '../dishSource.js';
+import resolvePromise from '../resolvePromise.js';
 
 export default
 function Details(props){
 
-    console.log("This is props passed downt to details");
+    console.log("This is props passed down to details");
     console.log(props);
 
     const [dishesLocal, setDishes] = useState(props.model.dishes);
     const [currentDishLocal, setCurrentDish] = useState(props.model.currentDish);
-    const [dataLocal, setData] = useState(props.model.currentDishPromiseState.data);
+    const [currDishPromStateLocal, setCurrDishPromState] = useState(props.model.currentDishPromiseState);
     const [numberOfGuestsLocal, setNumberOfGuests] = useState(props.model.numberOfGuests);
 
     function observerACB() {
         setDishes(props.model.dishes);
         setCurrentDish(props.model.currentDish);
-        setData(props.model.currentDishPromiseState.data);
+        setCurrDishPromState(props.model.currentDishPromiseState);
         setNumberOfGuests(props.model.numberOfGuests);
+    }
+
+    //This runs when currentDishLocal is changed...
+    function resolvePromiseForCurrentDishACB() {
+        const dishDetails = getDishDetails(currentDishLocal);         //getDishDetails returns a promise
+        if(currentDishLocal !== undefined){
+            resolvePromise(dishDetails, currDishPromStateLocal);
+        }
     }
 
     function lifeACB() {
@@ -31,9 +40,11 @@ function Details(props){
     }
     
     useEffect(lifeACB, []);
+    //This is used to resolvePromise only when currentDishLocal is changed...
+    useEffect(resolvePromiseForCurrentDishACB, [currentDishLocal]);  
 
     function addDishToMenuInModelACB(){
-        props.model.addToMenu(dataLocal); 
+        props.model.addToMenu(currDishPromStateLocal.data); 
     }
 
     function isDishAlreadyInMenuACB(dish) {
@@ -41,10 +52,10 @@ function Details(props){
     }
 
     
-    return promiseNoData(props.model.currentDishPromiseState) ||  
+    return promiseNoData(currDishPromStateLocal) ||  
            <DetailsView onAddingDishToMenu = {addDishToMenuInModelACB}  
                         guests = {numberOfGuestsLocal}
-                        dishData = {dataLocal} 
+                        dishData = {currDishPromStateLocal.data} 
                         isDishInMenu={dishesLocal.filter(isDishAlreadyInMenuACB).length > 0}
             />  
 }
