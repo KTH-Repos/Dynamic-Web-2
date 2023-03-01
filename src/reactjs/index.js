@@ -5,6 +5,8 @@ import {render} from "react-dom";
 // needed for View JSX. In a React project you can use a React import in each View instead
 window.React= React;
 
+
+
 // When the ReactRoot is exported, uncomment lines below:
 // using require() instead of import, for the above assignments to take effect before ReactRoot is loaded
         const ReactRoot=require("/src/reactjs/ReactRoot.js").default;

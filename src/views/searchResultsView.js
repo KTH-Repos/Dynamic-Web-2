@@ -8,6 +8,7 @@ function SearchResultView(props){
     
 
     function onSpanClicked(e) {
+        window.location.hash = "#/details";
         return e.target;
     }
 
