@@ -1,41 +1,53 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
 import promiseNoData from "../views/promiseNoData";
-import React from "react";
-import { useState, useEffect} from "react";
-import resolvePromise from "../resolvePromise";
 import { searchDishes } from "../dishSource";
+import resolvePromise from "../resolvePromise";
 
 //searchResultsPromiseState and searchParams are needed from props
-export default
 function Search(props) {
 
-    const [,reRender] = useState();
-    const [promiseState,] = useState({});
+    console.log("This is results promisestate passed down as props");
+    console.log(props.model.searchResultsPromiseState);
+
+    const[searchResultsDataLocal, setSearchResultsData] = useState(props.model.searchResultsPromiseState.data);
+    const [, reRender] = useState();
     const [searchType, setSearchType] = useState(props.model.searchParams.type);
     const [searchQuery, setSearchQuery] = useState(props.model.searchParams.query);
-    
-    console.log(props)
-    function forceRerenderACB(){ 
-        reRender(new Object()); 
+    const[promiseState] = useState({})
+    function forceReRenderACB() {
+        reRender(new Object());
     }
 
-
-    // Component lifecycle hooks
-    function lifeACB() {
-        // Perform first search if results are not available
-        if (!props.model.searchResultsPromiseState.promise) {
-          props.model.doSearch(props.model.searchParams);
+    function updateOnPromise(promise,reRender) {
+        if(promise){
+            
+            promise.then(reRender).catch(reRender);
+            reRender();
         }
-      }
-  
-      function ripACB() {
-        console.log("perform cleanup");
-      }
-    
+        
+    }
 
-    function handleSearchACB(){ 
-        resolvePromise(searchDishes({type : searchType, query: searchQuery}), promiseState, forceRerenderACB);
+    function lifeACB() {
+        if(!props.model.searchResultsPromiseState.promise){
+            props.model.doSearch({});//.then(setNewSearchResultsPromise);
+            setSearchResultsData(props.model.searchResultsPromiseState.data);
+            /*  resolve(props.model.doSearch({}))
+            forceReRenderACB(); */
+        }
+        function ripACB() {
+            console.log("cleanup!!");
+        }
+        return ripACB;
+    }
+
+    useEffect(lifeACB, []);
+
+    function handleSearchACB(){
+        //props.model.doSearch(props.model.searchParams);
+        updateOnPromise(props.model.searchResultsPromiseState.promise, forceReRenderACB)
     }
 
     function handleTypeChangeACB(type){
@@ -43,30 +55,27 @@ function Search(props) {
     }
 
     function handleInputChangeACB(query){
-        setSearchQuery(query)
+        setSearchQuery(query);
+
     }
 
     function handleResultsACB(dish){
         props.model.setCurrentDish(dish.id)
     }
 
-
-
-    
-    
     return <div>
-   <SearchFormView onInputChange = {handleInputChangeACB} 
-    searchTypeCB={handleTypeChangeACB} 
-    onSearchingNow={handleSearchACB} 
-    dishTypeOptions = {["starter", "main course", "dessert"]}
-     />
-    { promiseNoData(promiseState) || 
- 	<SearchResultsView resultChosenACB = {handleResultsACB} 
-    searchResults={promiseState.data}
-    />}
+            <SearchFormView onInputChange = {handleInputChangeACB} 
+                            searchTypeCB={handleTypeChangeACB} 
+                            onSearchingNow={handleSearchACB} 
+                            dishTypeOptions = {["starter", "main course", "dessert"]}
+            />
+            { promiseNoData(props.model.searchResultsPromiseState) || 
+            <SearchResultsView resultChosenACB = {handleResultsACB} 
+                               searchResults={searchResultsDataLocal}
+            />}
           </div>;
 
     
-    }
+}
 
-
+export default Search;
