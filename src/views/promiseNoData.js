@@ -1,5 +1,5 @@
 function promiseNoData(props) {
-  console.log(props.error)
+  //console.log(props.error)
   if (!props || !props.promise) {
     return (
       <div>

@@ -7,38 +7,37 @@ import promiseNoData from "../views/promiseNoData";
 function Search(props) {
 
     const[, setSearchResultsPromise] = useState(props.model.searchResultsPromiseState);
-    const [,reRender] = useState("");
+    const [, reRender] = useState("");
 
 
     function forceReRenderACB(){
         return reRender(new Object());
     }
 
-    function extractDataFromPromsie() {
+
+    function extractDataFromPromise() {
         setSearchResultsPromise(props.model.searchResultsPromiseState.data);
+        
     }
     
     function extractErrorFromPromise(){
         setSearchResultsPromise(props.model.searchResultsPromiseState.error);
     }
 
-
     function lifeACB(){
         if(!props.model.searchResultsPromiseState.promise){
-            props.model.doSearch({})
-            props.model.searchResultsPromiseState.promise.then(extractDataFromPromsie);
+            props.model.doSearch({});
+            props.model.searchResultsPromiseState.promise.then(extractDataFromPromise).catch(extractErrorFromPromise);
             forceReRenderACB();
         }
     }
 
-     useEffect(lifeACB, []);   
-
-    
-    
-
+    useEffect(lifeACB, []);   
 
     function handleSearchACB(){
         props.model.doSearch(props.model.searchParams)
+        props.model.searchResultsPromiseState.promise.then(extractDataFromPromise).catch(extractErrorFromPromise);
+        forceReRenderACB();
     }
 
     function handleTypeChangeACB(type){
@@ -53,20 +52,16 @@ function Search(props) {
         props.model.setCurrentDish(dish.id)
     }
 
-
-
-    
-    
     return <div>
-   <SearchFormView onInputChange = {handleInputChangeACB} 
-    searchTypeCB={handleTypeChangeACB} 
-    onSearchingNow={handleSearchACB} 
-    dishTypeOptions = {["starter", "main course", "dessert"]}
-     />
-    { promiseNoData( props.model.searchResultsPromiseState) || 
- 	<SearchResultsView resultChosenACB = {handleResultsACB} 
-    searchResults={props.model.searchResultsPromiseState.data}
-    />}
+                <SearchFormView onInputChange = {handleInputChangeACB} 
+                        searchTypeCB={handleTypeChangeACB} 
+                        onSearchingNow={handleSearchACB} 
+                        dishTypeOptions = {["starter", "main course", "dessert"]}
+                />
+                { promiseNoData( props.model.searchResultsPromiseState) || 
+                <SearchResultsView resultChosenACB = {handleResultsACB} 
+                                   searchResults={props.model.searchResultsPromiseState.data}
+                />}
           </div>;
 
     
