@@ -5,31 +5,31 @@ import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
 import DinnerModel from "../DinnerModel";
 
-function ReactRoot() {
+function ReactRoot(props) {
 
-    const myModel = new DinnerModel();
+    //const myModel = new DinnerModel();
     const router = [
         {
             path: "/",
-            element: <Search model={myModel} /> 
+            element: <Search model={props.model} /> 
         },
         {
             path: "/search",
-            element: <Search model={myModel} />
+            element: <Search model={props.model} />
         },
         {
             path: "/details",
-            element: <Details model={myModel} />
+            element: <Details model={props.model} />
         },
         {
             path: "/summary",
-            element: <Summary model={myModel} />
+            element: <Summary model={props.model} />
         }
     ]
 
     return(
         <div>
-            <div className="sidebar"><Sidebar model={myModel} /></div>
+            <div className="sidebar"><Sidebar model={props.model} /></div>
             <div className="flexParent"><RouterProvider router={createHashRouter(router)} /></div>
         </div>
     );       

@@ -1,8 +1,9 @@
-
 import {sortIngredients} from "../utilities.js";
 
 /* Functional JSX component. Name must start with capital letter */
 function SummaryView(props){
+
+  
   
     return (
             <div class="debug">
