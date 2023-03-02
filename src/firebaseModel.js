@@ -1,3 +1,8 @@
+import firebaseConfig from "./firebaseConfig";
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const PATH = "dinnerModel34";
 const { initializeApp }= require( "firebase/app");
 const { getDatabase, ref, get, set, onValue}= require( "/src/teacherFirebase.js");
 // Add relevant imports here 
