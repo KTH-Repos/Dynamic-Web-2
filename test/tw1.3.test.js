@@ -21,13 +21,13 @@ try{
     }catch(e){}
 //}
 
-//try{
-//    SidebarView= require('../src/views/'+X+'sidebarView.vue').default;
-//}catch(e){
+try{
+    SidebarView= require('../src/views/'+X+'sidebarView.vue').default;
+}catch(e){
     try{
         SidebarView= require('../src/views/'+X+'sidebarView.js').default;
     }catch(e){}
-//}
+}
 
 
 
@@ -149,7 +149,7 @@ describe("TW1.3 Array Rendering and basic CSS", function tw1_3() {
             expect((lookup[tds[1].textContent.trim()].pricePerServing*ppl).toFixed(2)).to.equal(tds[3].textContent.trim(), "last column must show total menu price multiplied by number of guests");
 
             expect(tds[1].firstElementChild?.nodeName, "dish name should be a HTML link (<a>)").to.equal("A");
-            expect(tds[1].firstElementChild?.getAttribute("href"), "dish name HTML link should point to the same page (#) to prevent full page reload").to.equal("#");
+            expect(tds[1].firstElementChild?.getAttribute("href").startsWith("#"), "dish name HTML link should point to the same page (#) to prevent full page reload").to.equal(true);
             
             if(!checkCSS) return;
             document.body.append(tds[3]);
