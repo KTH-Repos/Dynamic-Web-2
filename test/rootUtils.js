@@ -2,7 +2,7 @@
 import { assert, expect } from "chai";
 import {withMyFetch, myDetailsFetch} from "./mockFetch.js";
 import {dummyImgName} from "./searchUtils.js";
-import {useState, useEffect, createElement} from "react";
+import {useState, useEffect, createElement } from "react";
 import {h, createApp} from "vue";
 
 const X = TEST_PREFIX;
@@ -56,11 +56,14 @@ async function testVue(theTest){
         app.use(VueRootAll.router);
         app.mount(div);
     });
-    const result= await theTest(propsHistory);
-    app.unmount();
-    if(result===false)
-        return false;
-    return true;
+    try{
+        const result= await theTest(propsHistory);
+        if(result===false)
+            return false;
+        return true;
+    }finally{
+        app.unmount();
+    }
 }
 
 async function testReact(theTest){
@@ -90,11 +93,12 @@ async function testReact(theTest){
         require("react-dom").render(<Guard/>, div);
     });
 
-    const result= await theTest(propsHistory);
-    turnOff();
-    if(result===false)
-        return false;
-    return true;
+    try{
+        const result= await theTest(propsHistory);
+        if(result===false)
+            return false;
+        return true;
+    }finally{ turnOff();}
 }
 
 async function testRoutes(propsHistory){
