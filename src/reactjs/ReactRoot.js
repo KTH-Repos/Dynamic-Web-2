@@ -3,7 +3,7 @@ import Details from "./detailsPresenter";
 import Search from "./searchPresenter";
 import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
-import DinnerModel from "../DinnerModel";
+import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../DinnerModel";
 
 function ReactRoot(props) {
 
