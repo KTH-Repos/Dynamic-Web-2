@@ -1,6 +1,5 @@
 import { assert, expect } from "chai";
-import installOwnCreateElement from "./jsxCreateElement";
-import React from "react";
+import {createElement, useState, useEffect} from "react";
 import {render} from "react-dom";
 import {dishInformation, myDetailsFetch} from "./mockFetch.js";
 import  {plusMinusEventName, removeEventName, currentDishEventName} from "./sidebarUtils.js";
@@ -24,16 +23,16 @@ describe("TW3.2 React Sidebar presenter (observer, component state, lifecycle) [
         propsHistory.push(props);
         return <span>dummy view</span>;
     }
-    const h = React.createElement;
+
     function replaceViews(tag, props, ...children){
         if(tag== SidebarView)
-            return h(Dummy, props, ...children);
-        return h(tag, props, ...children);
+            return createElement(Dummy, props);
+        return createElement(tag, props, ...children);
     };
     let turnOff;
     function Guard(props){
-        const [state, setState]= React.useState(true);
-        React.useEffect(()=> turnOff=()=>setState(false), []);
+        const [state, setState]= useState(true);
+        useEffect(()=> turnOff=()=>setState(false), []);
         return state && props.children;
     }
     
@@ -60,8 +59,7 @@ describe("TW3.2 React Sidebar presenter (observer, component state, lifecycle) [
     
     function doRender(){
         const div= document.createElement("div");
-        window.React=React;
-        React.createElement= replaceViews;
+        window.React={createElement: replaceViews};
         propsHistory.length=0;
         
         render(<Guard><SidebarPresenter model={model}/></Guard>, div);
@@ -71,7 +69,7 @@ describe("TW3.2 React Sidebar presenter (observer, component state, lifecycle) [
         if (!SidebarPresenter) this.skip();
     });
     after(function tw_3_2_40_after(){
-        React.createElement=h;
+        window.React.createElement=createElement;
     });
     function checkAgainstModel(){
         expect(propsHistory.slice(-1)[0].number, "number prop passed to the SidebarView should update when the number of guests in the model updates").to.equal(model.numberOfGuests);
@@ -105,27 +103,30 @@ describe("TW3.2 React Sidebar presenter (observer, component state, lifecycle) [
     });
 
     it("Sidebar presenter updates view with correct props when relevant data changes in the model",  async function tw_3_2_40_2(){
+        
         const {changeGuests, addDish, removeDish}=require("./payloadUtils.js");
         await new Promise(resolve => setTimeout(resolve));
-
+        window.React={createElement: replaceViews};
+ 
         await changeGuests(modelTarget, observers, propsHistory, true);
         checkAgainstModel();
         await addDish(modelTarget, observers, propsHistory, true);
         checkAgainstModel();
         await removeDish(modelTarget, observers, propsHistory, true);
-        checkAgainstModel();
+            checkAgainstModel();
     });
 
     it("Sidebar presenter does not update unless relevant data changes in the model",  async function tw_3_2_40_5(){
         const {changeCurrentDish, dummyNotification, noCurrentDish}=require("./payloadUtils.js");
         await new Promise(resolve => setTimeout(resolve));
-
+        window.React={createElement: replaceViews};
         await changeCurrentDish(modelTarget, observers, propsHistory, false);
         await noCurrentDish(modelTarget, observers, propsHistory, false);
         await dummyNotification(modelTarget, observers, propsHistory);
     });
 
     it("Sidebar presenter removes observer subscriptions at teardown", async  function tw_3_2_40_3(){
+        window.React={createElement: replaceViews};
         turnOff();
         await new Promise(resolve => setTimeout(resolve));
         if(!added)
