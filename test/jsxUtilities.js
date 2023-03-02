@@ -91,7 +91,8 @@ function prepareViewWithCustomEvents(view, props, makeButtons, eventValues){
         }
     });
     
-    installOwnCreateElement();
+    const h= installOwnCreateElement();
+    try{
     const rendering= view(propsProxy);
     const clickables= makeButtons(rendering);
     let customEventsAndParams;
@@ -119,6 +120,10 @@ function prepareViewWithCustomEvents(view, props, makeButtons, eventValues){
              clickables: makeButtons(rendering1),
              customEventNames:propNames,
              customEventParams:customEventsAndParams.map(([a,b])=>b)};
+    }finally{
+        window.React={createElement:h};
+    }
+
 }
 
 function findTag(tag, tree){
