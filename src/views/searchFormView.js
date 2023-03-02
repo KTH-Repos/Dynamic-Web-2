@@ -22,14 +22,14 @@ function SearchFormView(props){
     }
     
     function addOptionsCB(dishTypeOptions) {
-        return <option value={dishTypeOptions}>{dishTypeOptions}</option>
+        return <option key={dishTypeOptions} value={dishTypeOptions}>{dishTypeOptions}</option>
     }
 
     return(
         <div>
             <input onChange={onChangeInputCB}>type here</input>
             <select onChange={onChangeOptionCB}> 
-                <option value="">Choose:</option>
+                <option key="Choose" value="">Choose:</option>
                 {dishTypeOptions.map(addOptionsCB)}
             </select>
             <button onClick={startSearchCB}>Search!</button>

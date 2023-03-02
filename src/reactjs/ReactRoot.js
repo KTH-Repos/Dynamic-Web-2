@@ -7,7 +7,6 @@ import DinnerModel from "../DinnerModel";
 import "../firebaseModel";
 //import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
 
-
 function ReactRoot(props) {
 
     const myModel = new DinnerModel();
