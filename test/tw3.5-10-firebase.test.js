@@ -27,7 +27,9 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
         const {numberOfGuests, dishes, currentDish}=findPersistencePropNames();
         const model=  {
             setNumberOfGuests(g){ this.numberOfGuests= g;},
-            setCurrentDish(d){ this.currentDish=d; }
+            setCurrentDish(d){ this.currentDish=d; },
+            notifyObservers(){},
+            dishes:[]
         };
         const model2={...model};
 
@@ -41,6 +43,7 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
         });
         expect(model.currentDish, "the current dish set in the model should be the same as in the cloud").to.equal(22);
         expect(model.numberOfGuests, "the number of guests set in the model should be the same as in the cloud").to.equal(32);
+        expect(model.dishes).to.be.an("array");
         expect(model.dishes.map(d=>d.id).sort(), "the dishes set in the model should be retrieved from the API based on the IDs from the cloud").to.eql([42, 49]);
         expect(myDetailsFetch.lastFetch, "persistenceToModel should call the API, passing the given dish IDs").to.include("49");
         expect(myDetailsFetch.lastFetch, "persistenceToModel should call the API, passing the given dish IDs").to.include("42");
@@ -85,7 +88,7 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
             [dishes]:[ 45, 42, 22],
             [currentDish]: 42
         };
-        const model= { setNumberOfGuests(g){this.numberOfGuests=g;}, setCurrentDish(d){this.currentDish=d;}, addObserver(){}};
+        const model= { setNumberOfGuests(g){this.numberOfGuests=g;}, setCurrentDish(d){this.currentDish=d;}, addObserver(){}, notifyObservers(){}};
         await withMyFetch(myDetailsFetch, async function(){
             await firebaseModel.firebaseModelPromise(model);
         });
@@ -100,7 +103,7 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
         let obs;
         state.getHistory=[];
         await withMyFetch(myDetailsFetch, async function(){
-            await firebaseModel.firebaseModelPromise({ setNumberOfGuests(){}, setCurrentDish(){}, addObserver(o){obs=o;}});
+            await firebaseModel.firebaseModelPromise({ setNumberOfGuests(){}, setCurrentDish(){}, addObserver(o){obs=o;}, notifyObservers(){}});
         });
         expect(obs, "the last stage of the firebase model promise chain adds an observer to the model").to.be.ok;
         expect(obs, "the observer is expected to be a function").to.be.a("function");
@@ -114,7 +117,7 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
     it("firebaseModelPromise resolves to a truthy value (e.g. the model)", async function tw3_5_10_3(){
         let result;
         await withMyFetch(myDetailsFetch, async function(){
-            result= await firebaseModel.firebaseModelPromise({ setNumberOfGuests(){}, setCurrentDish(){}, addObserver(){}});
+            result= await firebaseModel.firebaseModelPromise({ setNumberOfGuests(){}, setCurrentDish(){}, addObserver(){}, notifyObservers(){}});
         });
         expect(result, "the last ACB in the firebase promise chain returns truthy (e.g. the model)").to.be.ok;
     });
