@@ -8,7 +8,13 @@ function SearchFormView(props){
     }
     
     function startSearchCB(e){
+        
         return props.onSearchingNow();
+        
+    }
+
+    function navigateACB(){
+        window.location.hash = "#/summary";
     }
     
     function onChangeOptionCB(e) {
@@ -27,6 +33,7 @@ function SearchFormView(props){
                 {dishTypeOptions.map(addOptionsCB)}
             </select>
             <button onClick={startSearchCB}>Search!</button>
+            <button onClick={navigateACB}>summary</button>
         </div>
     )
 }

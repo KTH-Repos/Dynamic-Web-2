@@ -8,12 +8,13 @@ function SearchResultView(props){
     
 
     function onSpanClicked(e) {
-        window.location.hash = "#/details";
+        
         return e.target;
     }
 
    function createSpansCB(searchResults){
     function clickSpanACB() {
+        window.location.hash = "#/details";
         return props.resultChosenACB(searchResults);
     }
     return <span className="span_alignment"  onClick={clickSpanACB} key={searchResults.id} > 

@@ -57,8 +57,11 @@ function sidebarView(props){
 
     function dishTableRowCB(dish){
         function linkEventACB(){
+
+            
             
             return props.onDishLink(dish)
+            
             
         }
 
@@ -71,7 +74,7 @@ function sidebarView(props){
         
         return <tr key={dish.id}>
                     <td><button onClick={clickXButtonACB}>x</button></td>
-                    <td><a href="#" onClick={linkEventACB}>{dish.title}</a></td>
+                    <td><a href="#/details" onClick={linkEventACB}>{dish.title}</a></td>
                     <td>{dishType(dish)}</td>
                      <td className="aligntotheright">{(dish.pricePerServing * numberOfGuests).toFixed(2)}</td>
                 </tr>

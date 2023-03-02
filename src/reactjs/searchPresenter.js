@@ -1,3 +1,4 @@
+import { useState,useEffect } from "react";
 import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
 import promiseNoData from "../views/promiseNoData";
@@ -5,13 +6,36 @@ import promiseNoData from "../views/promiseNoData";
 
 function Search(props) {
 
+    const[, setSearchResultsPromise] = useState(props.model.searchResultsPromiseState);
+    const [,reRender] = useState("");
+
+
+    function forceReRenderACB(){
+        return reRender(new Object());
+    }
+
+    function extractDataFromPromsie() {
+        setSearchResultsPromise(props.model.searchResultsPromiseState.data);
+    }
+    
+    function extractErrorFromPromise(){
+        setSearchResultsPromise(props.model.searchResultsPromiseState.error);
+    }
+
+
+    function lifeACB(){
+        if(!props.model.searchResultsPromiseState.promise){
+            props.model.doSearch({})
+            props.model.searchResultsPromiseState.promise.then(extractDataFromPromsie);
+            forceReRenderACB();
+        }
+    }
+
+     useEffect(lifeACB, []);   
+
     
     
 
-    console.log(props);
-    if(!props.model.searchResultsPromiseState.promise){
-        props.model.doSearch({})
-    }
 
     function handleSearchACB(){
         props.model.doSearch(props.model.searchParams)

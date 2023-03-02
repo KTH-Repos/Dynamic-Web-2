@@ -3,6 +3,10 @@ import {sortIngredients} from "../utilities.js";
 /* Functional JSX component. Name must start with capital letter */
 function SummaryView(props){
 
+  function navigateACB(){
+    window.location.hash = "#/search";
+  }
+
   
   
     return (
@@ -35,6 +39,7 @@ function SummaryView(props){
                   }
                 </tbody>
               </table>
+              <button onClick={navigateACB}>nav to search</button>
             </div>
     );
     /* for TW1.5 

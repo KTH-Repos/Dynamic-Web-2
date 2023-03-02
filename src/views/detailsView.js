@@ -7,6 +7,10 @@ function DetailsView(props){
     
     console.log(props);
 
+    function navigateACB(){
+        window.location.hash = "#/search";
+      }
+
     
 
     function extractIngredientNameCB(dish) {
@@ -15,7 +19,8 @@ function DetailsView(props){
 
     function addDishToMenuACB(dish) {
       // if(dishIsInMenu) {
-            props.onAddingDishToMenu(dish);  
+    window.location.hash = "#/search";      
+      props.onAddingDishToMenu(dish);  
       // }
     }
 
@@ -45,7 +50,9 @@ function DetailsView(props){
             </div>
             <div>
                 <button disabled = {props.isDishInMenu} onClick={addDishToMenuACB}>Add to menu!</button>
-                <button  onClick={removeDishFromMenuACB}>Cancel</button>
+                <button  onClick={navigateACB}>Cancel</button>
+                
+
 
             </div>
             

@@ -3,27 +3,29 @@ import Details from "./detailsPresenter";
 import Search from "./searchPresenter";
 import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
-import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../DinnerModel";
+import DinnerModel from "../DinnerModel";
+/* import "../firebaseModel"; */
+
 
 function ReactRoot(props) {
 
-    //const myModel = new DinnerModel();
+    const myModel = new DinnerModel();
     const router = [
         {
             path: "/",
-            element: <Search model={props.model} /> 
+            element: <Search model={myModel} /> 
         },
         {
             path: "/search",
-            element: <Search model={props.model} />
+            element: <Search model={myModel} />
         },
         {
             path: "/details",
-            element: <Details model={props.model} />
+            element: <Details model={myModel} />
         },
         {
             path: "/summary",
-            element: <Summary model={props.model} />
+            element: <Summary model={myModel} />
         }
     ]
 
