@@ -4,7 +4,9 @@ import Search from "./searchPresenter";
 import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
 import DinnerModel from "../DinnerModel";
-/* import "../firebaseModel"; */
+import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
+
+
 
 
 function ReactRoot(props) {

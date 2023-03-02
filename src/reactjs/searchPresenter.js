@@ -1,3 +1,4 @@
+import React from "react";
 import { useState,useEffect } from "react";
 import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
@@ -6,8 +7,10 @@ import promiseNoData from "../views/promiseNoData";
 
 function Search(props) {
 
+    
+
     const[, setSearchResultsPromise] = useState(props.model.searchResultsPromiseState);
-    const [, reRender] = useState("");
+    const [, reRender] = useState({});
 
 
     function forceReRenderACB(){
@@ -31,7 +34,7 @@ function Search(props) {
             forceReRenderACB();
         }
     }
-
+ 
     useEffect(lifeACB, []);   
 
     function handleSearchACB(){
@@ -58,10 +61,12 @@ function Search(props) {
                         onSearchingNow={handleSearchACB} 
                         dishTypeOptions = {["starter", "main course", "dessert"]}
                 />
+                
                 { promiseNoData( props.model.searchResultsPromiseState) || 
                 <SearchResultsView resultChosenACB = {handleResultsACB} 
                                    searchResults={props.model.searchResultsPromiseState.data}
                 />}
+                
           </div>;
 
     

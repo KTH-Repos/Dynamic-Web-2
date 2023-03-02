@@ -12,9 +12,10 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const PATH = "dinnerModel34";
 
+ref(db, PATH+"/test").set("dummysssssssssss");
 
 function observerRecap(/*TODO*/) {
-    //TODO
+    console.log("observerRecap")
 }
 
 function firebaseModelPromise() {
