@@ -6,37 +6,8 @@ import Summary from "./summaryPresenter";
 import DinnerModel from "../DinnerModel";
 import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
 
+// const myModel= new DinnerModel();
 
+// define the routes
 
-
-function ReactRoot(props) {
-
-    const myModel = new DinnerModel();
-    const router = [
-        {
-            path: "/",
-            element: <Search model={myModel} /> 
-        },
-        {
-            path: "/search",
-            element: <Search model={myModel} />
-        },
-        {
-            path: "/details",
-            element: <Details model={myModel} />
-        },
-        {
-            path: "/summary",
-            element: <Summary model={myModel} />
-        }
-    ]
-
-    return(
-        <div>
-            <div className="sidebar"><Sidebar model={props.model} /></div>
-            <div className="flexParent"><RouterProvider router={createHashRouter(router)} /></div>
-        </div>
-    );       
-}
-
-export default ReactRoot;
+// export default function ReactRoot() { TODO }
