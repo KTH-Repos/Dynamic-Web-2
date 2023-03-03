@@ -1,11 +1,10 @@
 const { initializeApp }= require( "firebase/app");
 const { getDatabase, ref, get, set, onValue}= require( "/src/teacherFirebase.js");
-//import DinnerModel from "./DinnerModel";
-import { getMenuDetails } from "./dishSource";
 
 // Add relevant imports here 
 // TODO
 import firebaseConfig from "./firebaseConfig";
+import { getMenuDetails } from "./dishSource";
 
 // Initialise firebase app, database, ref
 // TODO
@@ -13,20 +12,8 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const PATH = "DinnerModel34";
 
-//ref(db, PATH+"/TEST").set("dummy");
-
-/* const rfs = ref(db, PATH+"/test");
-
-get(rfs).then(gotDataACB); */
-
 const rf = ref(db, PATH+"/test");
-set(rf, "hoorooay");
-
-
-function gotDataACB(firebaseData) {
-    console.log("This is fetched from FireBase");
-    console.log(firebaseData.val());
-}
+set(rf, "dummy");
 
 
 function observerRecap(model) {
@@ -35,7 +22,6 @@ function observerRecap(model) {
     }
     model.addObserver(observerToAddACB);
 }
-
 
 function modelToPersistence(model){
     let persistedData = {};
@@ -74,7 +60,6 @@ function persistenceToModel(persistedData, model){
         return getMenuDetails(persistedData.dishes).then(setDishesToModelACB);    
     }
     model.numberOfGuests = 2;
-    return model;
 }
 
 function firebaseModelPromise(model) {

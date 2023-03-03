@@ -23,7 +23,7 @@ function Search(props) {
             reRender();  
         }
     }
-    
+
     function lifeACB(){
         if(!props.model.searchResultsPromiseState.promise) {
             props.model.doSearch({});
@@ -61,7 +61,6 @@ function Search(props) {
                 <SearchResultsView resultChosenACB = {handleResultsACB} 
                                    searchResults={props.model.searchResultsPromiseState.data}
                 />}
-                
           </div>);
 
     

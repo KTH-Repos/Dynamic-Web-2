@@ -8,9 +8,6 @@ import resolvePromise from '../resolvePromise.js';
 export default
 function Details(props){
 
-    //console.log("This is props passed down to details");
-    //console.log(props);
-
     const [dishesLocal, setDishes] = useState(props.model.dishes);
     const [currentDishLocal, setCurrentDish] = useState(props.model.currentDish);
     const [numberOfGuestsLocal, setNumberOfGuests] = useState(props.model.numberOfGuests);

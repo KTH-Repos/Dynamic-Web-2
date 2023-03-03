@@ -17,13 +17,13 @@ const Details = require("../"+PREFIX+"/detailsPresenter.js").default;
 const ReactRoot = require("../"+PREFIX+"../reactjs/ReactRoot").default
 
 export default
-function App(props){
+function App(){
     return (<div className="flexParent">
-                {/* <ReactRoot /> */}
-                <div className="sidebar"><Sidebar model ={props.model}/></div>
+                <ReactRoot />
+                {/* <div className="sidebar"><Sidebar model ={props.model}/></div>
                 <div className="summary"><Summary model={props.model} /></div>
                 <div className="search"  ><Search model={props.model} /></div>
-                <div className="details" ><Details model={props.model} /></div>
+                <div className="details" ><Details model={props.model} /></div> */}
             </div>
            );
 }

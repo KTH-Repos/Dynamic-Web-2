@@ -5,35 +5,32 @@ import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
 import DinnerModel from "../DinnerModel";
 import "../firebaseModel";
-//import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
 
 const myModel = new DinnerModel();
 
 function ReactRoot() {
 
-    //console.log("This is props passed downt to ReactRoot");
-    //console.log(myModel);
     const router = [
         {
             path: "/",
-            element: <Search model={myModel} /> 
+            element: <div className="search"><Search model={myModel} /></div>
         },
         {
             path: "/search",
-            element: <Search model={myModel} />
+            element: <div className="search"><Search model={myModel} /></div>
         },
         {
             path: "/details",
-            element: <Details model={myModel} />
+            element: <div className="details"><Details model={myModel} /></div>
         },
         {
             path: "/summary",
-            element: <Summary model={myModel} />
+            element: <div className="summary"><Summary model={myModel} /></div>
         }
     ]
 
-    return  <div>
-                <div><Sidebar model={myModel} /></div>
+    return  <div className="flexParent">
+                <div className="sidebar"><Sidebar model={myModel} /></div>
                 <div><RouterProvider router={createHashRouter(router)} /></div>
             </div>       
 }
