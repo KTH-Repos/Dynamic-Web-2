@@ -12,29 +12,30 @@ function Search(props) {
         const reRenderACB = () => forceUpdate(new Object());
       
         return reRenderACB;
-      }
+    }
 
-      function updateOnPromise(promise, reRender) {
-        if (promise) {
-          promise.then(reRender).catch(reRender);
-        }
-        reRender(); 
-      }
-
+    //custom hook used for force re-rendering
     const reRenderACB = useForceUpdate();
 
+    function updateOnPromise(promise, reRender) {
+        if (promise) {
+            promise.then(reRender).catch(reRender);
+            reRender();  
+        }
+    }
+
+
     function lifeACB(){
-        if((!props.model.searchResultsPromiseState.promise)) {
+        if(!props.model.searchResultsPromiseState.promise) {
             props.model.doSearch({});
-            updateOnPromise(props.model.searchResultsPromiseState.promise, reRenderACB); 
+            updateOnPromise(props.model.searchResultsPromiseState.promise, reRenderACB);
         }
     }
  
     useEffect(lifeACB,[]);   
-    //useEffect(handleSearchACB, [props.model.searchResultsPromiseState]);
 
     function handleSearchACB(){
-        props.model.doSearch(props.model.searchParams)
+        props.model.doSearch(props.model.searchParams);
         updateOnPromise(props.model.searchResultsPromiseState.promise, reRenderACB);
     }
 

@@ -8,8 +8,8 @@ import resolvePromise from '../resolvePromise.js';
 export default
 function Details(props){
 
-    console.log("This is props passed down to details");
-    console.log(props);
+    //console.log("This is props passed down to details");
+    //console.log(props);
 
     const [dishesLocal, setDishes] = useState(props.model.dishes);
     const [currentDishLocal, setCurrentDish] = useState(props.model.currentDish);
@@ -26,8 +26,8 @@ function Details(props){
       function updateOnPromise(promise, reRender) {
         if (promise) {
           promise.then(reRender).catch(reRender);
+          reRender(); 
         }
-        reRender(); 
       }
 
     const reRenderACB = useForceUpdate();

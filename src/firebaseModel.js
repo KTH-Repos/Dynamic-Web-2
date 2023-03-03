@@ -3,18 +3,24 @@ const { getDatabase, ref, get, set, onValue}= require( "/src/teacherFirebase.js"
 
 // Add relevant imports here 
 // TODO
+import firebaseConfig from "./firebaseConfig";
 
 // Initialise firebase app, database, ref
 // TODO
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const PATH = "dinnerModel34";
+const PATH = "DinnerModel34";
 
-ref(db, PATH+"/test").set("dummysssssssssss");
+//ref(db, PATH+"/test").set("dummy");
 
-function observerRecap(/*TODO*/) {
-    console.log("observerRecap")
+
+function observerRecap(model) {
+    function observerToAddACB(data) {
+        console.log(data);
+    }
+    model.addObserver(observerToAddACB);
 }
+
 
 function modelToPersistence(/* TODO */){
     // TODO return an object
@@ -33,5 +39,4 @@ function firebaseModelPromise(model) {
 }
 
 
-// Remember to uncomment the following line:
-// export {observerRecap, modelToPersistence, persistenceToModel, firebaseModelPromise};
+export {observerRecap, modelToPersistence, persistenceToModel, firebaseModelPromise};
