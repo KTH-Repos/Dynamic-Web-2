@@ -14,11 +14,12 @@ const Search = require("../"+PREFIX+"/searchPresenter.js").default;
 
 const Details = require("../"+PREFIX+"/detailsPresenter.js").default;
 
-//const reactRoot = require("../"+PREFIX+"../reactjs/ReactRoot").default
+//const ReactRoot = require("../"+PREFIX+"../reactjs/ReactRoot").default
 
 export default
 function App(props){
     return (<div className="flexParent">
+                {/* <ReactRoot /> */}
                 <div className="sidebar"><Sidebar model ={props.model}/></div>
                 <div className="summary"><Summary model={props.model} /></div>
                 <div className="search"  ><Search model={props.model} /></div>

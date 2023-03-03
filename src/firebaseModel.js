@@ -9,25 +9,26 @@ import firebaseConfig from "./firebaseConfig";
 // TODO
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const PATH = "DinnerModel34";
+const PATH = "DinnerMode34";
 
 //ref(db, PATH+"/TEST").set("dummy");
 
-//const rfs = ref(db, "/ref");
+const rfs = ref(db, PATH+"/test");
 
-//get(rfs).then(gotDataACB);
-const rf = ref(db, PATH+"/test");
-set(rf, "dummy");
-
+get(rfs).then(gotDataACB);
+/* const rf = ref(db, PATH+"/test");
+set(rf, "dummyssssss55");
+ */
 
 function gotDataACB(firebaseData) {
+    console.log("This is fetched from FireBase");
     console.log(firebaseData.val());
 }
 
 
 function observerRecap(model) {
     function observerToAddACB(data) {
-        console.log(data);
+        //console.log(data);
 
     }
     model.addObserver(observerToAddACB);
