@@ -4,8 +4,8 @@ import Search from "./searchPresenter";
 import Sidebar from "./sidebarPresenter";
 import Summary from "./summaryPresenter";
 import DinnerModel from "../DinnerModel";
-//import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
 import "../firebaseModel";
+//import {observerRecap, firebaseModelPromise, updateFirebaseFromModel, updateModelFromFirebase} from "../firebaseModel";
 
 const myModel = new DinnerModel();
 
@@ -33,8 +33,8 @@ function ReactRoot() {
     ]
 
     return  <div>
-                <div className="sidebar"><Sidebar model={myModel} /></div>
-                <div><RouterProvider className="flexParent" router={createHashRouter(router)} /></div>
+                <div><Sidebar model={myModel} /></div>
+                <div><RouterProvider router={createHashRouter(router)} /></div>
             </div>       
 }
 

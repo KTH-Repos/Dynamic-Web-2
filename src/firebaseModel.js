@@ -11,19 +11,31 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const PATH = "DinnerModel34";
 
-//ref(db, PATH+"/test").set("dummy");
+//ref(db, PATH+"/TEST").set("dummy");
+
+//const rfs = ref(db, "/ref");
+
+//get(rfs).then(gotDataACB);
+const rf = ref(db, PATH+"/test");
+set(rf, "dummy");
+
+
+function gotDataACB(firebaseData) {
+    console.log(firebaseData.val());
+}
 
 
 function observerRecap(model) {
     function observerToAddACB(data) {
         console.log(data);
+
     }
     model.addObserver(observerToAddACB);
 }
 
 
 function modelToPersistence(/* TODO */){
-    // TODO return an object
+
 }
 
 function persistenceToModel(/* TODO */){

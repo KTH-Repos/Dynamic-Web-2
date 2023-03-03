@@ -23,8 +23,7 @@ function Search(props) {
             reRender();  
         }
     }
-
-
+    
     function lifeACB(){
         if(!props.model.searchResultsPromiseState.promise) {
             props.model.doSearch({});
