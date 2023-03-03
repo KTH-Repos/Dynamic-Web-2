@@ -1,5 +1,7 @@
 const { initializeApp }= require( "firebase/app");
 const { getDatabase, ref, get, set, onValue}= require( "/src/teacherFirebase.js");
+//import DinnerModel from "./DinnerModel";
+import { getMenuDetails } from "./dishSource";
 
 // Add relevant imports here 
 // TODO
@@ -9,16 +11,17 @@ import firebaseConfig from "./firebaseConfig";
 // TODO
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const PATH = "DinnerMode34";
+const PATH = "DinnerModel34";
 
 //ref(db, PATH+"/TEST").set("dummy");
 
-const rfs = ref(db, PATH+"/test");
+/* const rfs = ref(db, PATH+"/test");
 
-get(rfs).then(gotDataACB);
-/* const rf = ref(db, PATH+"/test");
-set(rf, "dummyssssss55");
- */
+get(rfs).then(gotDataACB); */
+
+const rf = ref(db, PATH+"/test");
+set(rf, "hoorooay");
+
 
 function gotDataACB(firebaseData) {
     console.log("This is fetched from FireBase");
@@ -28,28 +31,73 @@ function gotDataACB(firebaseData) {
 
 function observerRecap(model) {
     function observerToAddACB(data) {
-        //console.log(data);
-
+        console.log(data);
     }
     model.addObserver(observerToAddACB);
 }
 
 
-function modelToPersistence(/* TODO */){
+function modelToPersistence(model){
+    let persistedData = {};
 
+    function extractIdCB(dish) {
+        return dish.id;
+    }
+    function sortComparatorCB(x, y) {
+        return x - y;
+    }
+
+    //extract numberOfGuests from modell
+    persistedData.numberOfGuests = model.numberOfGuests;  
+
+    //extract ids and sort them
+    persistedData.dishes = model.dishes.map(extractIdCB);    
+    persistedData.dishes.sort(sortComparatorCB);
+    
+    //extract currentDish
+    if(model.currentDish === undefined) {
+        persistedData.currentDish = null;
+    }
+    persistedData.currentDish = model.currentDish;
+    return persistedData;
 }
 
-function persistenceToModel(/* TODO */){
+function persistenceToModel(persistedData, model){
     // TODO return a promise
+    function setDishesToModelACB(dishArray) {
+        return model.dishes = dishArray;  
+    }
+
+    if(persistedData !== undefined) {
+        model.numberOfGuests = persistedData.numberOfGuests;
+        model.currentDish = persistedData.currentDish;
+        return getMenuDetails(persistedData.dishes).then(setDishesToModelACB);    
+    }
+    model.numberOfGuests = 2;
+    return model;
 }
 
 function firebaseModelPromise(model) {
     // TODO return a promise chain that
     // 1) retrieves data from firebase using firebase get()
     // 2) saves the data into the model (received as parameter)
+    function putDataToModelACB(dataFromFirebase) {
+        persistenceToModel(dataFromFirebase.val(), model);
+    }
+
     // 3) adds a model observer that calls firebase set() and modelToPersistence()
+    function observerToPersistModelACB() {
+        function observerToPersist() {
+            let modelModified = modelToPersistence(model);
+            set(ref(db, PATH+"/appState"), modelModified);
+        }
+        model.addObserver(observerToPersist);
+        return model;
+      }
+
+    return get(ref(db, PATH+"/appState")).then(putDataToModelACB).then(observerToPersistModelACB);
+
     // 4) optional: calls firebase onValue() for live update
 }
-
 
 export {observerRecap, modelToPersistence, persistenceToModel, firebaseModelPromise};
