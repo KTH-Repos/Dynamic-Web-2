@@ -33,24 +33,25 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
         };
         const model2={...model};
 
-        const result= await withMyFetch(myDetailsFetch, function(){
+        let result;
+        await withMyFetch(myDetailsFetch, function(){
             return firebaseModel.persistenceToModel( {
                 [numberOfGuests]:32,
                 [dishes]:[49, 42],
                 [currentDish]:22
             },model
-                              );
+                                                   ).then(x=> result=x);
         });
         expect(model.currentDish, "the current dish set in the model should be the same as in the cloud").to.equal(22);
         expect(model.numberOfGuests, "the number of guests set in the model should be the same as in the cloud").to.equal(32);
         expect(model.dishes).to.be.an("array");
         expect(model.dishes.map(d=>d.id).sort(), "the dishes set in the model should be retrieved from the API based on the IDs from the cloud").to.eql([42, 49]);
-        expect(myDetailsFetch.lastFetch, "persistenceToModel should call the API, passing the given dish IDs").to.include("49");
-        expect(myDetailsFetch.lastFetch, "persistenceToModel should call the API, passing the given dish IDs").to.include("42");
+        expect(myDetailsFetch.lastFetch, "persistenceToModel should call getMenuDetails, passing the given dish IDs").to.include("49");
+        expect(myDetailsFetch.lastFetch, "persistenceToModel should call getMenuDetails, passing the given dish IDs").to.include("42");
         expect(result, "persistenceToModel should return a promise that resolves to a truthy object (hint: just return the model)").to.be.ok;
 
         const result2= await withMyFetch(myDetailsFetch, function(){
-            return firebaseModel.persistenceToModel(undefined,model2);
+            return firebaseModel.persistenceToModel(null, model2);
         });
         expect(model2.currentDish, "if there is no data in the cloud, currentDish should be set to null or not defined").to.not.be.ok;
         expect(model2.numberOfGuests, "if there is no data in the cloud, number of guests should be set to 2").to.equal(2);
@@ -88,15 +89,17 @@ describe("TW3.5 Firebase-model", function tw3_5_10() {
             [dishes]:[ 45, 42, 22],
             [currentDish]: 42
         };
-        const model= { setNumberOfGuests(g){this.numberOfGuests=g;}, setCurrentDish(d){this.currentDish=d;}, addObserver(){}, notifyObservers(){}};
+        const model= { setNumberOfGuests(g){this.numberOfGuests=g;}, setCurrentDish(d){this.currentDish=d;}, addObserver(){}, notifyObservers(){}, dishes:[]};
+        let dsh;
         await withMyFetch(myDetailsFetch, async function(){
-            await firebaseModel.firebaseModelPromise(model);
+            await firebaseModel.firebaseModelPromise(model).then(()=>dsh=model.dishes);
         });
         expect(state.getHistory.length, "the firebase promise makes a get() call").to.equal(1);
         state.data[dishes].forEach(x=>expect(myDetailsFetch.lastFetch, "firebase promise chain initiates getMenuDetails promise").to.include(x));
         expect(model.numberOfGuests, "data from firebase get() is set into the model (nr. guests)").to.equal(state.data[numberOfGuests]);
         expect(model.currentDish, "data from firebase get() is set into the model (current dish)").to.equal(state.data[currentDish]);
-        expect(model.dishes.map(d=>d.id), "dihes with the IDs from firebase get() are retrieved via getMenuDetails and set into the model").to.eql(state.data[dishes]);
+        expect(dsh, "when firebaseModelPromise resolves, model dishes should be an array").to.be.an("array");
+        expect(dsh.map(d=>d.id), "when firebaseModelPromsie resolves, dihes retrieved via getMenuDetails() should be set into the model. Did you return (or await) the promise returned by persistenceToModel?").to.eql(state.data[dishes]);
     });
 
     it("firebaseModelPromise adds a model observer, which invokes set()", async function tw3_5_10_3(){
