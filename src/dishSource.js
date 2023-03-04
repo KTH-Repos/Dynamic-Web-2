@@ -27,6 +27,8 @@ const options = {
 };
 
 function getMenuDetails(array) {
+  console.log("This is send as request to API when loading");
+  console.log(array);
   const param = array.join(",");
   return fetch(BASE_URL+API_ENDPOINT_1+'?ids='+param, options)
   .then(processHTTPResponseACB)

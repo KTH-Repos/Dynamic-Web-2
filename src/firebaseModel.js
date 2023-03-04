@@ -33,7 +33,7 @@ function modelToPersistence(model){
         return x - y;
     }
 
-    //extract numberOfGuests from modell
+    //extract numberOfGuests from model
     persistedData.numberOfGuests = model.numberOfGuests;  
 
     //extract ids and sort them
@@ -54,12 +54,15 @@ function persistenceToModel(persistedData, model){
         return model.dishes = dishArray;  
     }
 
-    if(persistedData !== undefined) {
+    if(persistedData) {
         model.numberOfGuests = persistedData.numberOfGuests;
         model.currentDish = persistedData.currentDish;
-        return getMenuDetails(persistedData.dishes).then(setDishesToModelACB);    
+        if(persistedData.dishes) {
+            return getMenuDetails(persistedData.dishes).then(setDishesToModelACB);    
+        }
     }
-    model.numberOfGuests = 2;
+    else {model.numberOfGuests = 2;}
+    
 }
 
 function firebaseModelPromise(model) {
@@ -67,7 +70,7 @@ function firebaseModelPromise(model) {
     // 1) retrieves data from firebase using firebase get()
     // 2) saves the data into the model (received as parameter)
     function putDataToModelACB(dataFromFirebase) {
-        persistenceToModel(dataFromFirebase.val(), model);
+        return persistenceToModel(dataFromFirebase.val(), model);
     }
 
     // 3) adds a model observer that calls firebase set() and modelToPersistence()

@@ -1,4 +1,3 @@
-//import React from 'react';
 import { useState, useEffect } from "react";
 import DetailsView from '../views/detailsView.js';
 import promiseNoData from '../views/promiseNoData.js';
