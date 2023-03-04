@@ -1,7 +1,6 @@
 function SearchFormView(props){
     
     const dishTypeOptions = props.dishTypeOptions
-    //console.log(props);
     
     function onChangeInputCB(e){
         return props.onInputChange(e.target.value);
@@ -27,7 +26,7 @@ function SearchFormView(props){
 
     return(
         <div>
-            <input onChange={onChangeInputCB}>type here</input>
+            <input onChange={onChangeInputCB}></input>
             <select onChange={onChangeOptionCB}> 
                 <option key="Choose" value="">Choose:</option>
                 {dishTypeOptions.map(addOptionsCB)}
