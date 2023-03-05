@@ -3,6 +3,7 @@
     border-style:solid;
 }
 
+
 .numtablerow{
     text-align: right;
 }
@@ -18,18 +19,40 @@
 .flexParent{
     display: flex;
     flex-direction: row;
+    height: 100%;
+    
 }
 
 .sidebar{
-    margin: 5px;
-    width : 400px;
-    display: block;
+    flex:0;
+    
+
 }
 
-.main-content{
-    border: 2px solid;
-    margin-top: 5px;
+.summary{
+    flex:0,5;
+    
 }
+
+.search{
+    flex:0,5;
+    
+}
+
+
+
+.details{
+    flex:0;
+}
+
+
+
+.flex_alignment{
+    display: flex;
+    
+
+}
+
 
 .span_alignment{
     text-align: center;
@@ -37,6 +60,7 @@
     vertical-align: auto;
     display: block;
 }
+
 
 .parent_div{
     display: flex;
@@ -47,25 +71,8 @@
 
 @media only screen and (max-width: 250px){
     .flexParent{
+        
         flex-direction: column;
         
     }
 }
-
-.img-size {
-    width: 350px;
-    height: 300px;
-  }
-
-.inline {
-    display:inline-block;
-    margin-right:5px;
- }
-  
-
-  
-  
-  
-  
-  
-  

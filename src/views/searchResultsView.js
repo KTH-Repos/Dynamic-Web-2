@@ -1,8 +1,12 @@
 function SearchResultView(props){
 
+    
+    
     const searchResults = props.searchResults;
     console.log(props)
     
+    
+
     function onSpanClicked(e) {
         
         return e.target;
@@ -19,6 +23,8 @@ function SearchResultView(props){
             </span>     
     } 
      
+
+
     return (
         <div className="parent_div" >
             {searchResults.map(createSpansCB)}

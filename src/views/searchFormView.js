@@ -26,13 +26,13 @@ function SearchFormView(props){
 
     return(
         <div>
-            <input placeholder="Search here..." onChange={onChangeInputCB}></input>
+            <input onChange={onChangeInputCB}></input>
             <select onChange={onChangeOptionCB}> 
                 <option key="Choose" value="">Choose:</option>
                 {dishTypeOptions.map(addOptionsCB)}
             </select>
             <button onClick={startSearchCB}>Search!</button>
-            <button onClick={navigateACB}>Summary</button>
+            <button onClick={navigateACB}>summary</button>
         </div>
     )
 }
