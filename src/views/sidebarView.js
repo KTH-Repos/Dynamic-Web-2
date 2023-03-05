@@ -33,7 +33,7 @@ function sidebarView(props){
     return(
         <div>
             <button onClick={subByOneACB}disabled = {numberOfGuests === 1}>-</button>
-            {numberOfGuests}
+            Dinner for {numberOfGuests} people
             <button onClick={addByOneACB} >+</button>  
             <table> 
                 <tbody>
