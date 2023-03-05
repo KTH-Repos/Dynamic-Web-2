@@ -4,7 +4,6 @@ import SearchFormView from "../views/searchFormView";
 import SearchResultsView from "../views/searchResultsView";
 import promiseNoData from "../views/promiseNoData";
 
-
 function Search(props) {
 
     function useForceUpdate() {
@@ -62,8 +61,6 @@ function Search(props) {
                                    searchResults={props.model.searchResultsPromiseState.data}
                 />}
           </div>);
-
-    
 }
 
 export default Search;

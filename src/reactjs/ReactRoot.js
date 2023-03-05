@@ -51,26 +51,26 @@ function ReactRoot() {
     const router = [
         {
             path: "/",
-            element: <div className="search"><Search model={myModel} /></div>
+            element: <div ><Search model={myModel} /></div>
         },
         {
             path: "/search",
-            element: <div className="search"><Search model={myModel} /></div>
+            element: <div ><Search model={myModel} /></div>
         },
         {
             path: "/details",
-            element: <div className="details"><Details model={myModel} /></div>
+            element: <div ><Details model={myModel} /></div>
         },
         {
             path: "/summary",
-            element: <div className="summary"><Summary model={myModel} /></div>
+            element: <div ><Summary model={myModel} /></div>
         }
     ]
 
     return  ( promiseNoData(promiseState) || 
         (<div className="flexParent">
                 <div className="sidebar"><Sidebar model={myModel} /></div>
-                <div><RouterProvider router={createHashRouter(router)} /></div>
+                <div className="main-content"><RouterProvider router={createHashRouter(router)} /></div>
             </div>)  );     
 }
 

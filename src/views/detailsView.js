@@ -29,33 +29,31 @@ function DetailsView(props){
     }
    
     return (
-        <div className="flex_alignment">
+        <div >
             {/* Ths div is for dish info */}
             <div>
-                <header>{props.dishData.title}</header>
+                <header><h2>{props.dishData.title}</h2></header>
                 
-                <div className="flex_alignment">
-                    <img src={props.dishData.image} height="100"></img>
-                    <div>
-                        <span> price : {props.dishData.pricePerServing} 
-                        <br/>  for {props.guests} guests: {(props.guests * props.dishData.pricePerServing).toFixed(2)}</span>
+                <div >
+                    <img className="img-size" src={props.dishData.image} height="100"></img>
+                    <div >
+                        <button className="inline"  disabled = {props.isDishInMenu} onClick={addDishToMenuACB}>Add to menu!</button>
+                        <button className="inline"  onClick={navigateACB}>Cancel</button>
+
                     </div>
-                </div> 
+                    
+                    
+                </div>
+                    <h4><span> price : {props.dishData.pricePerServing} 
+                        <br/>  for {props.guests} guests: {(props.guests * props.dishData.pricePerServing).toFixed(2)}</span></h4>
                 <br/>
                 <span>{dishIngredients.map(extractIngredientNameCB)}</span>
                 <br/>
-                <span> Instructions :  {props.dishData.instructions}</span>
+                <span className="fixed-width">{props.dishData.instructions}</span>
                 <br/>
                 <a href={props.dishData.sourceUrl}> more information</a>
             </div>
-            <div>
-                <button disabled = {props.isDishInMenu} onClick={addDishToMenuACB}>Add to menu!</button>
-                <button  onClick={navigateACB}>Cancel</button>
-                
-
-
-            </div>
-            
+           
 
         </div>
     )
