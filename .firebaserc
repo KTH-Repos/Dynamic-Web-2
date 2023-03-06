@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "dinnerplanner-be83d"
-  }
+    "default": "dinnerplanner-v2",
+    "dp": "dinnerplanner-v2"
+  },
+  "targets": {},
+  "etags": {}
 }
