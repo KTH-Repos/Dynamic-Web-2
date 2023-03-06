@@ -7,6 +7,9 @@ import promiseNoData from "../views/promiseNoData";
 
 function Search(props) {
 
+
+    
+
     function useForceUpdate() {
         const [, forceUpdate] = useState();
         const reRenderACB = () => forceUpdate(new Object());
@@ -51,7 +54,7 @@ function Search(props) {
     }
 
     return (<div>
-                <SearchFormView onInputChange = {handleInputChangeACB} 
+                <SearchFormView value = {props.model.searchParams.query} onInputChange = {handleInputChangeACB} 
                         searchTypeCB={handleTypeChangeACB} 
                         onSearchingNow={handleSearchACB} 
                         dishTypeOptions = {["starter", "main course", "dessert"]}
