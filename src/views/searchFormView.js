@@ -26,7 +26,7 @@ function SearchFormView(props){
 
     return(
         <div>
-            <input defaultValue={props.value} onChange={onChangeInputCB}></input>
+            <input placeholder="Search here..."defaultValue={props.value} onChange={onChangeInputCB}></input>
             <select onChange={onChangeOptionCB}> 
                 <option key="Choose" value="">Choose:</option>
                 {dishTypeOptions.map(addOptionsCB)}

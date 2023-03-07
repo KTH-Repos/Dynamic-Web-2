@@ -61,7 +61,9 @@ function persistenceToModel(persistedData, model){
             return getMenuDetails(persistedData.dishes).then(setDishesToModelACB);    
         }
     }
-    else {model.numberOfGuests = 2;}
+    else {
+        model.numberOfGuests = 2;
+    }
     
 }
 
